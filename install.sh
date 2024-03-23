@@ -26,14 +26,14 @@ done
 
 # ready to go!
 cp -r vim  $destination
-cp exrc $destination/.exrc
+cp vimrc $destination/.vimrc
 for d in CAMx Includes Mod_src IO_bin IO_NCF CMC CF_AERO CMU_AERO SOAP PiG HG OSAT DDM PA RTRAC MPI Dummy_MPI Dummy_NCF 
 do
-	echo "source ../.exrc" > $destination/$d/.exrc
+	echo "source ../.vimrc" > $destination/$d/.vimrc
 done
 for d in MPI/util
 do
-	echo "source ../../.exrc" > $destination/$d/.exrc
+	echo "source ../../.vimrc" > $destination/$d/.vimrc
 done
 
 cat << ieof > $destination/.ctags
