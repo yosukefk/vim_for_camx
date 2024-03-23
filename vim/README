@@ -1,0 +1,12 @@
+note for useing vim
+
+tags:
+goto top directory, run 
+
+ctags */* Inc/*.com Inc/camx.prm
+
+
+compiler:
+
+:compiler pgf90
+may or maynot be run automatically, so do it manually if needed.

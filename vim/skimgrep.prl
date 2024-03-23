@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+# Takes the grep -n output and show only part that is meant for Osat or DDM
+# Save you from lots of matches for modules that you aren't working on.
+# usage:
+# grep -n yourword */*f | perl skimgrep.prl
+# in vim, set grepprg to be 'grep -n $* /dev/null \| /path/tp/skimgrep.prl'
+# then you can :grep yourword */*f  to search for matches.
+use strict;
+my $fold = "";
+my (@ll, @cc);
+while( my $line = <> )
+{
+	my $x = 'Main';
+	my ($fname,$lnum,@tmp)=split(/:/,$line);
+	my $content = join(':',@tmp);
+	#print "$fold,$fname\n";
+	if ($fname ne $fold)
+	{
+		if ($fold ne "")
+		{
+			flushoutput($fold,\@ll,\@cc);
+		}
+		$fold = $fname;
+	}
+
+	# save line number and comment
+	push(@ll, $lnum);
+	push(@cc, $content);
+}
+# flush the last output
+flushoutput($fold,\@ll,\@cc);
+
+sub flushoutput()
+{
+	# $fname: filename that found match by grep
+	# $lnum: reference to array of line numbers where match was found
+	# $coms: reference to array of the lines that found match
+	# @$lnum and @$coms should have same number of elements
+	my ($fname, $lnums, $coms) = @_;
+	my $l = shift(@$lnums);
+	my $c = shift(@$coms);
+
+	# preselect ouput
+	# files in Osat or DDM directory wont be printed out
+	if ($fname =~ /^Osat\// || $fname =~ /^DDM\// ) { 
+		@$lnums = ();
+		@$coms = ();
+		return; 
+	}
+
+	# go through each line
+	open(FIN,"<$fname");
+	my $x = 'Main';
+	my $i = 0;
+	while( my $line=<FIN>)
+	{
+		$i++;
+		# identify if code is meant for some module
+		if ($line =~ /^c=+ (.*) Begin =+/)
+		{
+			$x=$1;
+		}
+		elsif ($line =~ /^c=+ (.*) End =+/)
+		{
+			$x='Main';
+		}
+
+		# print out the matched line
+		if ($l == $i)
+		{
+			if ($x ne 'Source Apportion' && $x ne 'DDM' )
+			{
+				#print "$fname:$l:$x:$c";
+				print "$fname:$l:$c";
+			}
+			$l = shift(@$lnums);
+			$c = shift(@$coms);
+		}
+	}
+	close(FIN);
+}
