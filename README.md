@@ -4,7 +4,7 @@
 
 1. instal CAMx first, https://camx.com/.  ctags used, but that comes with vim
 2. go to the top directory of camx installation, and `git clone https://github.com/yosukefk/vim_for_camx.git`
-3. `cd vim_for_camx; Make`
+3. `cd vim_for_camx; make`
 
 ## use
 from vim,
