@@ -1,9 +1,6 @@
 " all vim stuff is in the root of camx.  
 " each subdirectory should have exrc which have source ../.exrc
 " also, your ~/.vimrc should have set exrc, of cource
-"let rootdir = $HOME . "/Desktop/work/camx420_lpa"
-"let rootdir = $HOME . "/src/work/camx420_lpa"
-"let rootdir = "/sunghye.old/yosuketmp/camx420_lpa"
 let rootdir =  expand("<sfile>:p:h")
 
 " for K command, look for the token from files in Inc
