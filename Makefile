@@ -1,6 +1,6 @@
 #destination=..
-destination=..
+INSTALLDIR=..
 
 install:
-	bash install.sh $(destination)
+	bash install.sh $(INSTALLDIR)
 
