@@ -1,6 +1,6 @@
 #destination=..
 destination=..
 
-default:
+install:
 	bash install.sh $(destination)
 
